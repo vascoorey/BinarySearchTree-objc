@@ -19,6 +19,7 @@
 		BC9CC6BD196414C800736CA5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC9CC6A5196414C700736CA5 /* UIKit.framework */; };
 		BC9CC6C5196414C800736CA5 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = BC9CC6C3196414C800736CA5 /* InfoPlist.strings */; };
 		BC9CC6C7196414C800736CA5 /* BinarySearchTreeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BC9CC6C6196414C800736CA5 /* BinarySearchTreeTests.m */; };
+		BC9CC6D71964160D00736CA5 /* BinarySearchTree.m in Sources */ = {isa = PBXBuildFile; fileRef = BC9CC6D61964160D00736CA5 /* BinarySearchTree.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +49,9 @@
 		BC9CC6C2196414C800736CA5 /* BinarySearchTreeTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "BinarySearchTreeTests-Info.plist"; sourceTree = "<group>"; };
 		BC9CC6C4196414C800736CA5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		BC9CC6C6196414C800736CA5 /* BinarySearchTreeTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BinarySearchTreeTests.m; sourceTree = "<group>"; };
+		BC9CC6D1196414FF00736CA5 /* Comparable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Comparable.h; sourceTree = "<group>"; };
+		BC9CC6D51964160D00736CA5 /* BinarySearchTree.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BinarySearchTree.h; sourceTree = "<group>"; };
+		BC9CC6D61964160D00736CA5 /* BinarySearchTree.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BinarySearchTree.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +81,7 @@
 		BC9CC695196414C700736CA5 = {
 			isa = PBXGroup;
 			children = (
+				BC9CC6D0196414CF00736CA5 /* Source */,
 				BC9CC6A7196414C700736CA5 /* BinarySearchTree */,
 				BC9CC6C0196414C800736CA5 /* BinarySearchTreeTests */,
 				BC9CC6A0196414C700736CA5 /* Frameworks */,
@@ -142,6 +147,17 @@
 				BC9CC6C3196414C800736CA5 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		BC9CC6D0196414CF00736CA5 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				BC9CC6D1196414FF00736CA5 /* Comparable.h */,
+				BC9CC6D51964160D00736CA5 /* BinarySearchTree.h */,
+				BC9CC6D61964160D00736CA5 /* BinarySearchTree.m */,
+			);
+			name = Source;
+			path = BinarySearchTree/Source;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -241,6 +257,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BC9CC6AE196414C700736CA5 /* main.m in Sources */,
+				BC9CC6D71964160D00736CA5 /* BinarySearchTree.m in Sources */,
 				BC9CC6B2196414C700736CA5 /* DOGAppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
