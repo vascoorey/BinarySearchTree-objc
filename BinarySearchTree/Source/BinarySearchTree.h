@@ -7,31 +7,29 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "Comparable.h"
 
 @interface BinarySearchTree : NSObject
 
 @property (nonatomic, readonly) int size;
-/*!
- @abstract Of \c id<Comparable>
- */
 @property (nonatomic, readonly) NSArray *keys;
 
-- (id)objectForKey:(id <Comparable>)key;
-- (void)setObject:(id)object forKey:(id <Comparable>)key;
+- (id)objectForKey:(id)key;
+- (id)objectForKeyedSubscript:(id <NSCopying>)key;
+- (void)setObject:(id)object forKey:(id)key;
+- (void)setObject:(id)object forKeyedSubscript:(id<NSCopying>)key;
 
-- (id <Comparable>)min;
-- (id <Comparable>)max;
+- (id)min;
+- (id)max;
 
-- (id <Comparable>)floorForKey:(id <Comparable>)key;
-- (id <Comparable>)ceilingForKey:(id <Comparable>)key;
+- (id)floorForKey:(id)key;
+- (id)ceilingForKey:(id)key;
 
-- (id <Comparable>)select:(int)k;
-- (int)rankForKey:(id <Comparable>)key;
+- (id)select:(int)k;
+- (int)rankForKey:(id)key;
 
 - (void)removeMin;
-- (void)removeObjectForKey:(id <Comparable>)key;
+- (void)removeObjectForKey:(id)key;
 
-- (void)enumerateKeysAndObjectsUsingBlock:(void (^)(id <Comparable> key, id object, BOOL *stop))block;
+- (void)enumerateKeysAndObjectsUsingBlock:(void (^)(id key, id object, BOOL *stop))block;
 
 @end

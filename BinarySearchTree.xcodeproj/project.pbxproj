@@ -49,7 +49,6 @@
 		BC9CC6C2196414C800736CA5 /* BinarySearchTreeTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "BinarySearchTreeTests-Info.plist"; sourceTree = "<group>"; };
 		BC9CC6C4196414C800736CA5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		BC9CC6C6196414C800736CA5 /* BinarySearchTreeTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BinarySearchTreeTests.m; sourceTree = "<group>"; };
-		BC9CC6D1196414FF00736CA5 /* Comparable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Comparable.h; sourceTree = "<group>"; };
 		BC9CC6D51964160D00736CA5 /* BinarySearchTree.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BinarySearchTree.h; sourceTree = "<group>"; };
 		BC9CC6D61964160D00736CA5 /* BinarySearchTree.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BinarySearchTree.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -152,7 +151,6 @@
 		BC9CC6D0196414CF00736CA5 /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				BC9CC6D1196414FF00736CA5 /* Comparable.h */,
 				BC9CC6D51964160D00736CA5 /* BinarySearchTree.h */,
 				BC9CC6D61964160D00736CA5 /* BinarySearchTree.m */,
 			);
@@ -457,6 +455,7 @@
 				BC9CC6CC196414C800736CA5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		BC9CC6CD196414C800736CA5 /* Build configuration list for PBXNativeTarget "BinarySearchTreeTests" */ = {
 			isa = XCConfigurationList;
@@ -465,6 +464,7 @@
 				BC9CC6CF196414C800736CA5 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

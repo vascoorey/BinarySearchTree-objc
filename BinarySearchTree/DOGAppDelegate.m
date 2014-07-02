@@ -7,6 +7,7 @@
 //
 
 #import "DOGAppDelegate.h"
+#import "BinarySearchTree.h"
 
 @implementation DOGAppDelegate
 
@@ -16,6 +17,10 @@
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
+  
+  BinarySearchTree *b = [[BinarySearchTree alloc] init];
+  NSLog(@"%@", b.description);
+  
     return YES;
 }
 

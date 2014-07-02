@@ -10,7 +10,7 @@
 
 @interface Node : NSObject
 
-@property (nonatomic, copy) id <Comparable> key;
+@property (nonatomic, copy) id key;
 @property (nonatomic, strong) id object;
 
 @property (nonatomic, strong) Node *left;
@@ -18,13 +18,13 @@
 
 @property (nonatomic) int nodesInSubtree;
 
-+ (instancetype)nodeWithKey:(id <Comparable>)key object:(id)object nodesInSubtree:(int)nodesInSubtree;
++ (instancetype)nodeWithKey:(id)key object:(id)object nodesInSubtree:(int)nodesInSubtree;
 
 @end
 
 @implementation Node
 
-+ (instancetype)nodeWithKey:(id<Comparable>)key object:(id)object nodesInSubtree:(int)nodesInSubtree {
++ (instancetype)nodeWithKey:(id)key object:(id)object nodesInSubtree:(int)nodesInSubtree {
   NSParameterAssert(key);
   NSParameterAssert(object);
   
@@ -51,24 +51,24 @@
 
 - (int)sizeForNode:(Node *)node;
 
-- (id)objectForKey:(id <Comparable>)key node:(Node *)node;
-- (Node *)setObject:(id)object forKey:(id<Comparable>)key node:(Node *)node;
+- (id)objectForKey:(id)key node:(Node *)node;
+- (Node *)setObject:(id)object forKey:(id)key node:(Node *)node;
 
 - (Node *)minForNode:(Node *)node;
 - (Node *)maxForNode:(Node *)node;
-- (Node *)floorForNode:(Node *)node key:(id <Comparable>)key;
-- (Node *)ceilingForNode:(Node *)node key:(id <Comparable>)key;
+- (Node *)floorForNode:(Node *)node key:(id)key;
+- (Node *)ceilingForNode:(Node *)node key:(id)key;
 
 - (Node *)select:(Node *)node k:(int)k;
-- (int)rankForNode:(Node *)node key:(id<Comparable>)key;
+- (int)rankForNode:(Node *)node key:(id)key;
 
 - (Node *)removeMinForNode:(Node *)node;
-- (Node *)removeObjectForNode:(Node *)node key:(id <Comparable>)key;
+- (Node *)removeObjectForNode:(Node *)node key:(id)key;
 
-- (void)logNode:(Node *)node;
+- (NSString *)logNode:(Node *)node;
 
-- (NSArray *)keysForMin:(id <Comparable>)min max:(id <Comparable>)max;
-- (void)keysForNode:(Node *)node array:(NSMutableArray *)keys min:(id <Comparable>)min max:(id <Comparable>)max;
+- (NSArray *)keysForMin:(id)min max:(id)max;
+- (void)keysForNode:(Node *)node array:(NSMutableArray *)keys min:(id)min max:(id)max;
 
 @end
 
@@ -88,36 +88,44 @@
 
 #pragma mark - Get/Put
 
-- (id)objectForKey:(id<Comparable>)key {
+- (id)objectForKeyedSubscript:(id <NSCopying>)key {
+  return [self objectForKey:key];
+}
+
+- (void)setObject:(id)object forKeyedSubscript:(id<NSCopying>)key {
+  [self setObject:object forKey:key];
+}
+
+- (id)objectForKey:(id)key {
   return [self objectForKey:key node:self.root];
 }
 
-- (id)objectForKey:(id<Comparable>)key node:(Node *)node {
+- (id)objectForKey:(id)key node:(Node *)node {
   if(!node) return nil;
   
-  ComparisonResult result = [key compare:node.key];
-  if(result == ComparisonResultLessThan) {
+  NSComparisonResult result = [key compare:node.key];
+  if(result == NSOrderedAscending) {
     return [self objectForKey:key node:node.left];
-  } else if(result == ComparisonResultGreaterThan) {
+  } else if(result == NSOrderedDescending) {
     return [self objectForKey:key node:node.right];
   } else {
     return node.object;
   }
 }
 
-- (void)setObject:(id)object forKey:(id<Comparable>)key {
+- (void)setObject:(id)object forKey:(id)key {
   self.root = [self setObject:object forKey:key node:self.root];
 }
 
-- (Node *)setObject:(id)object forKey:(id<Comparable>)key node:(Node *)node {
+- (Node *)setObject:(id)object forKey:(id)key node:(Node *)node {
   if(!node) {
     return [Node nodeWithKey:key object:object nodesInSubtree:1];
   }
   
-  ComparisonResult result = [key compare:node.key];
-  if(result == ComparisonResultLessThan) {
+  NSComparisonResult result = [key compare:node.key];
+  if(result == NSOrderedAscending) {
     node.left = [self setObject:object forKey:key node:node.left];
-  } else if(result == ComparisonResultGreaterThan) {
+  } else if(result == NSOrderedDescending) {
     node.right = [self setObject:object forKey:key node:node.right];
   } else {
     node.object = object;
@@ -129,7 +137,7 @@
 
 #pragma mark - Operators
 
-- (id <Comparable>)min {
+- (id)min {
   return [self minForNode:self.root].key;
 }
 
@@ -138,7 +146,7 @@
   return [self minForNode:node.left];
 }
 
-- (id <Comparable>)max {
+- (id)max {
   return [self maxForNode:self.root].key;
 }
 
@@ -147,17 +155,17 @@
   return [self maxForNode:node.right];
 }
 
-- (id <Comparable>)floorForKey:(id<Comparable>)key {
+- (id)floorForKey:(id)key {
   return [self floorForNode:self.root key:key].key;
 }
 
-- (Node *)floorForNode:(Node *)node key:(id<Comparable>)key {
+- (Node *)floorForNode:(Node *)node key:(id)key {
   if(!node) return nil;
   
-  ComparisonResult result = [key compare:node.key];
-  if(result == ComparisonResultEqual) {
+  NSComparisonResult result = [key compare:node.key];
+  if(result == NSOrderedSame) {
     return node;
-  } else if(result == ComparisonResultLessThan) {
+  } else if(result == NSOrderedAscending) {
     return [self floorForNode:node.left key:key];
   }
   
@@ -167,17 +175,17 @@
   return node;
 }
 
-- (id <Comparable>)ceilingForKey:(id<Comparable>)key {
+- (id)ceilingForKey:(id)key {
   return [self ceilingForNode:self.root key:key].key;
 }
 
-- (Node *)ceilingForNode:(Node *)node key:(id<Comparable>)key {
+- (Node *)ceilingForNode:(Node *)node key:(id)key {
   if(!node) return nil;
   
-  ComparisonResult result = [key compare:node.key];
-  if(result == ComparisonResultEqual) {
+  NSComparisonResult result = [key compare:node.key];
+  if(result == NSOrderedSame) {
     return node;
-  } else if(result == ComparisonResultGreaterThan) {
+  } else if(result == NSOrderedDescending) {
     return [self floorForNode:node.left key:key];
   }
   
@@ -187,7 +195,7 @@
   return node;
 }
 
-- (id <Comparable>)select:(int)k {
+- (id)select:(int)k {
   return [self select:self.root k:k].key;
 }
 
@@ -204,17 +212,17 @@
   return node;
 }
 
-- (int)rankForKey:(id<Comparable>)key {
+- (int)rankForKey:(id)key {
   return [self rankForNode:self.root key:key];
 }
 
-- (int)rankForNode:(Node *)node key:(id<Comparable>)key {
+- (int)rankForNode:(Node *)node key:(id)key {
   if(!node) return 0;
   
-  ComparisonResult result = [key compare:node.key];
-  if(result == ComparisonResultLessThan) {
+  NSComparisonResult result = [key compare:node.key];
+  if(result == NSOrderedAscending) {
     return [self rankForNode:node.left key:key];
-  } else if(result == ComparisonResultGreaterThan) {
+  } else if(result == NSOrderedDescending) {
     return 1 + [self sizeForNode:node.left] + [self rankForNode:node.right key:key];
   }
   
@@ -237,17 +245,17 @@
   return node;
 }
 
-- (void)removeObjectForKey:(id<Comparable>)key {
+- (void)removeObjectForKey:(id)key {
   self.root = [self removeObjectForNode:self.root key:key];
 }
 
-- (Node *)removeObjectForNode:(Node *)node key:(id<Comparable>)key {
+- (Node *)removeObjectForNode:(Node *)node key:(id)key {
   if(!node) return nil;
   
-  ComparisonResult result = [key compare:node.key];
-  if(result == ComparisonResultLessThan) {
+  NSComparisonResult result = [key compare:node.key];
+  if(result == NSOrderedAscending) {
     node.left = [self removeObjectForNode:node.left key:key];
-  } else if(result == ComparisonResultGreaterThan) {
+  } else if(result == NSOrderedDescending) {
     node.right = [self removeObjectForNode:node.right key:key];
   } else {
     if(!node.right) {
@@ -268,12 +276,19 @@
 
 #pragma mark - Logging
 
-- (void)logNode:(Node *)node {
-  if(!node) return;
+- (NSString *)logNode:(Node *)node {
+  if(!node) return @"";
   
-  [self logNode:node.left];
-  NSLog(@"%@", node.object);
-  [self logNode:node.right];
+  NSString *log = @"";
+  log = [log stringByAppendingString:[self logNode:node.left]];
+  log = [log stringByAppendingFormat:@"%@", node.object];
+  log = [log stringByAppendingString:[self logNode:node.right]];
+  
+  return log;
+}
+
+- (NSString *)description {
+  return [self logNode:self.root];
 }
 
 #pragma mark - Enumeration
@@ -282,33 +297,33 @@
   return [self keysForMin:[self min] max:[self max]];
 }
 
-- (NSArray *)keysForMin:(id<Comparable>)min max:(id<Comparable>)max {
+- (NSArray *)keysForMin:(id)min max:(id)max {
   NSMutableArray *a = [NSMutableArray array];
   [self keysForNode:self.root array:a min:min max:max];
   return a;
 }
 
-- (void)keysForNode:(Node *)node array:(NSMutableArray *)keys min:(id<Comparable>)min max:(id<Comparable>)max {
+- (void)keysForNode:(Node *)node array:(NSMutableArray *)keys min:(id)min max:(id)max {
   if(!node) return;
   
-  ComparisonResult low = [min compare:node.key];
-  ComparisonResult high = [max compare:node.key];
+  NSComparisonResult low = [min compare:node.key];
+  NSComparisonResult high = [max compare:node.key];
   
-  if(low == ComparisonResultLessThan) {
+  if(low == NSOrderedAscending) {
     [self keysForNode:node.left array:keys min:min max:max];
   }
-  if((low == ComparisonResultEqual || low == ComparisonResultLessThan) && (high == ComparisonResultGreaterThan || high == ComparisonResultEqual)) {
+  if((low == NSOrderedSame || low == NSOrderedAscending) && (high == NSOrderedDescending || high == NSOrderedSame)) {
     [keys addObject:node.key];
   }
-  if(high == ComparisonResultGreaterThan) {
+  if(high == NSOrderedDescending) {
     [self keysForNode:node.right array:keys min:min max:max];
   }
 }
 
-- (void)enumerateKeysAndObjectsUsingBlock:(void (^)(id<Comparable>, id, BOOL *))block {
+- (void)enumerateKeysAndObjectsUsingBlock:(void (^)(id, id, BOOL *))block {
   BOOL *stop;
   *stop = NO;
-  for(id <Comparable> key in self.keys) {
+  for(id key in self.keys) {
     block(key, [self objectForKey:key], stop);
     if(stop) {
       return;
