@@ -321,8 +321,7 @@
 }
 
 - (void)enumerateKeysAndObjectsUsingBlock:(void (^)(id, id, BOOL *))block {
-  BOOL *stop;
-  *stop = NO;
+  BOOL *stop = NO;
   for(id key in self.keys) {
     block(key, [self objectForKey:key], stop);
     if(stop) {
